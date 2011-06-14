@@ -1,0 +1,5 @@
+#Wed Jun 08 15:09:13 COT 2011
+org.jboss.ide.eclipse.as.ui.defaultWebServer=Tomcat v6.0 Server at localhost
+eclipse.preferences.version=1
+org.jboss.ide.eclipse.as.ui.preferences.enabledDecorators.1=true
+org.jboss.ide.eclipse.as.ui.preferences.disabled.automatic.server.view=true

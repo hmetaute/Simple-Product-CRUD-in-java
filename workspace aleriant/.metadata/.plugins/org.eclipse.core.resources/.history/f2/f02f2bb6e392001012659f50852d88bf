@@ -1,0 +1,40 @@
+var productoActualizadoActivo = true;
+
+function eliminarProducto(idProducto){
+	//var nombreProducto = document.getElementById("NombreProducto").value;
+	alert('Estoy bien adentro y funcionando: ' + idProducto);			
+}
+
+
+function editarProducto(idProducto, nombreProducto, descripcionProducto, activo){
+	
+	$('#idProductoModificado').val(idProducto);
+	$('#ingresoNombre').val(nombreProducto);
+	$('#ingresoDescripcion').val(descripcionProducto);
+	if(activo == 'S'){
+		$("#ingresoActivo").prop("checked", true);
+		productoActualizadoActivo = true;
+	}else if(activo == 'N'){
+		$("#ingresoActivo").prop("checked", false);
+		productoActualizadoActivo = false;
+	}					
+}
+
+function actualizarProducto(){
+	$('#metodo').val('actualizar');
+	/*alert('algo');
+	alert('nombre antes de actualizar ' + $('#ingresoNombre').val());
+	alert('descripcion antes de actualizar ' + $('#ingresoDescripcion').val());
+	alert('id del producto que se esta actualizando ' + $('#idProductoModificado').val());
+	alert('el producto esta activo? ' +productoActualizadoActivo);*/
+	
+
+}
+
+
+function cambiarActivadoProducto(){
+	productoActualizadoActivo = !productoActualizadoActivo;
+	alert('el nuevo estado del producto por actualizar es ' + productoActualizadoActivo);
+}
+
+

@@ -1,0 +1,47 @@
+var productoActualizadoActivo = true;
+
+function eliminarProducto(idProducto){
+	//var nombreProducto = document.getElementById("NombreProducto").value;
+	alert('Estoy bien adentro y funcionando: ' + idProducto);			
+}
+
+
+function editarProducto(idProducto, nombreProducto, descripcionProducto, activo){
+	
+	$('#idProductoModificado').val(idProducto);
+	$('#ingresoNombre').val(nombreProducto);
+	$('#ingresoDescripcion').val(descripcionProducto);
+	if(activo == 'S'){
+		$("#ingresoActivo").prop("checked", true);
+		productoActualizadoActivo = true;
+		$('#productoModificadoActivo').val('true');
+	}else if(activo == 'N'){
+		$("#ingresoActivo").prop("checked", false);
+		productoActualizadoActivo = false;
+		$('#productoModificadoActivo').val('false');
+	}					
+}
+
+function actualizarProducto(){
+	if(confirm('¿Esta seguro que desea cambiar el estado del producto?')){
+		$('#metodo').val('actualizar');
+		var forma = document.forms[0];
+		forma.submit();
+	}
+}
+
+
+function cambiarActivadoProducto(){	
+		productoActualizadoActivo = !productoActualizadoActivo;
+		$('#productoModificadoActivo').val(productoActualizadoActivo);		
+}
+
+
+function crearProducto(nombreProducto, descripcionProducto, activo){
+	var nombreProducto = $('#ingresoNombre').val();
+	$('#ingresoDescripcion').val(descripcionProducto);
+	
+	
+}
+
+

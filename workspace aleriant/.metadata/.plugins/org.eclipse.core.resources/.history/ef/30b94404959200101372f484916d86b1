@@ -1,0 +1,64 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
+import business.Producto;
+
+public class ProductDaoOracle {
+	private static String url = "jdbc:oracle:thin:@192.168.1.58:1521:orcl";
+	private static String user = "fbpesos_dllofg";
+	private static String pass = "fbpesos_dllofg";
+	
+	
+	
+	public static void main(String[] args)
+    throws ClassNotFoundException, SQLException
+{
+  Class.forName("oracle.jdbc.driver.OracleDriver");  
+  Connection conn =
+       DriverManager.getConnection(url,user,pass);
+
+  conn.setAutoCommit(false);
+  Statement stmt = conn.createStatement();
+  ResultSet rset =
+       stmt.executeQuery("select * from tfb_parametros_sesion_usuarios");
+  while (rset.next()) {
+	  	
+       System.out.println (rset.getString(3) + "--");
+  }
+  stmt.close();
+  System.out.println ("Ok.");
+}
+	
+	
+	public Vector <Producto> ConsultarProductos(String nombre, String descripcion)throws ClassNotFoundException, SQLException{
+
+		Vector <Producto> resultado = new Vector <Producto>();
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+
+		Connection conn = DriverManager.getConnection(url,user,pass);
+		conn.setAutoCommit(false);
+		Statement stmt = conn.createStatement();
+		//String query = "select * from tfb_parametros_sesion_usuarios";
+		String query = "select * from productos p";
+		query += " where LOWER(p.nombre) like LOWER('%" + nombre + "%')";
+		query += " and LOWER(p.descripcion) like LOWER('%" + descripcion + "%')";
+		System.out.println("el query es: --" + query + "--");
+		ResultSet rset =
+		       stmt.executeQuery(query);
+		  while (rset.next()) {
+			  Producto p = new Producto();
+			  p.setDescripcion(rset.getString(3));
+			  p.setNombre(rset.getString(2));
+			  resultado.add(p);		      
+		  }
+		  stmt.close();
+		  conn.close();
+		return resultado;
+	}
+}

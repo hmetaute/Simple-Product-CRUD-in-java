@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
+<% @page import = "Vector" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%@page import="java.util.Vector"%><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<title>Manejador Productos</title>
+<script language="JavaScript" SRC="producto.js"></SCRIPT>
+</head>
+<body>
+<form action="ProductManager" method="POST" value="busqueda">
+			<input type="hidden" name="metodo" id="metodo" value="consulta"/>
+			<h1>Administrador de productos</h1>
+			<table border ="0.5">
+			<tr>
+				<td>
+					<b>Filtro</b>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Nombre: <input type="text" name="NombreProducto" id="NombreProducto" size="20"><br>
+				</td>
+				<td>
+					Descripcion: <input type="text" name="DescripcionProducto" id="DescripcionProducto" size="100">
+				</td>
+				<td><input type="submit" value="Filtrar"></td>
+			</tr>	
+			</table>
+			<br>
+			<table> 
+			<tr>
+				<td><b>Nombre</b></td>
+				<td><b>Descripcion</b></td>
+				<td><b>Estado</b></td>
+			<tr>
+			
+			
+			<tr>
+			<td>${NombreAttr}</td>
+			<td>${DescripAttr}</td>
+			<td>${EstadoAttr}</td>		
+			</tr>
+			</table>
+			<A HREF="javascript:eliminarProducto(1);">Eliminar</A>
+		</form>
+</body>
+</html>

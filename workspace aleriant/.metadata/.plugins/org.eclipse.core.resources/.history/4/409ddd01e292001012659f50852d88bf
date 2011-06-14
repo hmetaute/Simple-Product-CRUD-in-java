@@ -1,0 +1,26 @@
+function eliminarProducto(idProducto){
+	//var nombreProducto = document.getElementById("NombreProducto").value;
+	alert('Estoy bien adentro y funcionando: ' + idProducto);			
+}
+
+
+function editarProducto(idProducto, nombreProducto, descripcionProducto, activo){
+	
+	$('#idProductoModificado').val(idProducto);
+	$('#ingresoNombre').val(nombreProducto);
+	$('#ingresoDescripcion').val(descripcionProducto);
+	if(activo == 'S'){
+		$("#ingresoActivo").prop("checked", true);
+	}else if(activo == 'N'){
+		$("#ingresoActivo").prop("checked", false);
+	}
+					
+}
+
+function ingresarProducto(){
+	alert('algo');
+	var nombreProducto = $('#NombreProducto').val();
+	alert('Estoy en editar producto:  el producto es ' + nombreProducto);
+}
+
+

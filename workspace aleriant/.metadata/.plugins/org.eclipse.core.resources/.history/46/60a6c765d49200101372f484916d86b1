@@ -1,0 +1,85 @@
+package servlets;
+
+import java.io.IOException;
+import java.util.Vector;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import business.Producto;
+import dao.ProductDaoOracle;
+
+/**
+ * Servlet implementation class ProductManager
+ */
+public class ProductManager extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ProductManager() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try{
+			String metodoRequerido = request.getParameter("metodo");
+			System.out.println("El metodo que me solicitaron fue: " + metodoRequerido);
+			
+			if(metodoRequerido.equals("consulta")){			
+				buscarProducto(request, response);
+			}//else if(metodoRequ)
+		}catch(Exception e){
+			System.out.println("Hubo un error en el controlador de metodos" + e);
+		}
+
+	}
+	
+	private void buscarProducto(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String nombreProductoConsultado = request.getParameter("NombreProducto");
+		String descripcionProductoConsultado = request.getParameter("DescripcionProducto");
+		ProductDaoOracle miDAO = new ProductDaoOracle();
+		Vector <Producto> resultadosConsulta = new Vector<Producto>();		
+		try {
+			resultadosConsulta = miDAO.consultarProductos(nombreProductoConsultado,
+					descripcionProductoConsultado);
+			System.out.println("fue exitosa la consulta");
+		} catch (Exception e) {
+			System.out.println("hubo un error con la consulta" + e);
+		}
+		request.setAttribute("myList", resultadosConsulta);
+		System.out.println("tamaño " + resultadosConsulta.size());
+		
+		// Esta linea me costo dos horas de trabajo...
+		request.getRequestDispatcher("ProductsView.jsp").forward(request, response);		
+	}
+	
+	private void crearProducto(HttpServletRequest request, HttpServletResponse response){
+		String nombreProductoConsultado = request.getParameter("NombreProducto");
+		String descripcionProductoConsultado = request.getParameter("DescripcionProducto");
+		ProductDaoOracle miDAO = new ProductDaoOracle();		
+		boolean exito = false;
+		try{
+			
+		}catch(Exception E){
+			System.out.println();
+		}
+		
+		
+	}
+
+}

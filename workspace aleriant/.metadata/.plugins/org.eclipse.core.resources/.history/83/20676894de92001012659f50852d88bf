@@ -1,0 +1,22 @@
+function eliminarProducto(idProducto){
+	//var nombreProducto = document.getElementById("NombreProducto").value;
+	alert('Estoy bien adentro y funcionando: ' + idProducto);			
+}
+
+
+function editarProducto(idProducto, nombreProducto, descripcionProducto, activo){
+
+	alert('nombreproducto ' + nombreProducto);
+	alert('descripcionProducto ' + descripcionProducto);
+	alert('activo ' + activo);
+	
+}
+
+
+function ingresarProducto(){
+	alert('algo');
+	var nombreProducto = $('#NombreProducto').val();
+	alert('Estoy en editar producto:  el producto es ' + nombreProducto);
+}
+
+

@@ -1,0 +1,192 @@
+package dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
+import oracle.jdbc.OracleTypes;
+
+import business.Producto;
+
+public class ProductDaoOracle {
+	private static String url = "jdbc:oracle:thin:@192.168.1.58:1521:orcl";
+	private static String user = "fbpesos_dllofg";
+	private static String pass = "fbpesos_dllofg";
+	
+	
+	/**
+	 * Para propositos de debug
+	 * @param args
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+			public static void main(String[] args)
+		    throws ClassNotFoundException, SQLException
+		{
+		  Class.forName("oracle.jdbc.driver.OracleDriver");  
+		  Connection conn =
+		       DriverManager.getConnection(url,user,pass);
+		
+		  conn.setAutoCommit(false);
+		  Statement stmt = conn.createStatement();
+		  ResultSet rset =
+		       stmt.executeQuery("select * from tfb_parametros_sesion_usuarios");
+		  while (rset.next()) {
+			  	
+		       System.out.println (rset.getString(3) + "--");
+		  }
+		  stmt.close();
+		  System.out.println ("Ok.");
+		}
+	
+	/**
+	 * Clase que consulta los productos que cumplan dos condiciones.
+	 * @param nombre
+	 * @param descripcion
+	 * @return
+	 * @throws Exception 
+	 */
+	public Vector <Producto> consultarProductos(String nombre, String descripcion)throws Exception{
+
+		Vector <Producto> resultado = new Vector <Producto>();
+		String sql = "{ call pck_productos.sp_buscar_producto(?,?,?) }";
+		CallableStatement cs = null;
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection conn = DriverManager.getConnection(url,user,pass);		
+		
+		try{
+			
+			cs = conn.prepareCall(sql);
+			
+			cs.setString(1, nombre);
+			cs.setString(2, descripcion);
+			cs.registerOutParameter(3, OracleTypes.CURSOR);
+			
+			cs.execute();
+			
+			ResultSet rset =
+				(ResultSet)cs.getObject(3);
+			  while (rset.next()) {
+				  Producto p = new Producto();
+				  p.setDescripcion(rset.getString(3));
+				  p.setNombre(rset.getString(2));
+				  p.setID(rset.getString(1));
+				  resultado.add(p);		      
+			  }
+		  }catch(Exception e){
+			  System.out.println("Error en consultar productos " + e);
+			  throw e;
+		  }finally{
+			  if(cs != null){
+				  cs.close();
+			  }
+			  
+			  if(conn != null){
+				  conn.close();
+			  }
+		  }
+		return resultado;
+	}
+	
+	/**
+	 * Método que inserta un producto a la base de datos
+	 * @param p
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean insertarProducto (Producto p) throws Exception{
+		boolean exito = true;
+		String sql = "{ call pck_productos.sp_ingresar_producto(?,?) }";
+		CallableStatement cs = null;
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection conn = DriverManager.getConnection(url,user,pass);		
+		
+		try{
+			
+			cs = conn.prepareCall(sql);
+			
+			cs.setString(1, p.getNombre());
+			cs.setString(2, p.getDescripcion());			
+			
+			cs.execute();
+									
+		  }catch(Exception e){
+			  exito = false;
+			  System.out.println("Error en insertar productos " + e);
+			  throw e;
+		  }finally{
+			  if(conn != null){
+				  conn.close();
+			  }
+		  }		
+		return exito;
+	}
+	
+	
+	public boolean actualizarProducto(Producto p) throws Exception{
+		boolean exito = true;
+		String sql = "{ call pck_productos.sp_actualizar_producto(?,?,?) }";
+		CallableStatement cs = null;
+		Connection conn = null;
+			
+		
+		try{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url,user,pass);
+			
+			cs = conn.prepareCall(sql);
+			cs.setString(1, p.getID());
+			cs.setString(2, p.getNombre());
+			cs.setString(3, p.getDescripcion());			
+			
+			cs.execute();
+									
+		  }catch(Exception e){
+			  exito = false;
+			  System.out.println("Error en actualizar productos " + e);
+			  throw e;
+		  }finally{
+			  if(conn != null){
+				  conn.close();
+			  }
+		  }		
+		return exito;						
+	}
+	
+	
+	public boolean borrarProducto(Producto p) throws Exception{
+		boolean exito = true;
+		String sql = "{ call pck_productos.sp_eliminar_producto(?) }";
+		CallableStatement cs = null;
+		Connection conn = null;
+			
+		
+		try{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url,user,pass);
+			
+			cs = conn.prepareCall(sql);
+			cs.setString(1, p.getID());
+									
+			cs.execute();
+									
+		  }catch(Exception e){
+			  exito = false;
+			  System.out.println("Error en borrar productos " + e);
+			  throw e;
+		  }finally{
+			  if(conn != null){
+				  conn.close();
+			  }
+		  }		
+		return exito;		
+	}
+	
+	
+}

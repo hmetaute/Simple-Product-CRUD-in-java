@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="true" key="CommitDialog.showUntracked"/>
+	<list key="CommitDialog.authorValues">
+		<item value="Hernan Metaute &lt;hernan.metaute@gmail.com&gt;"/>
+	</list>
+	<list key="CommitDialog.committerValues">
+		<item value="Hernan Metaute &lt;hernan.metaute@gmail.com&gt;"/>
+	</list>
+	<list key="RepositorySelectionPage.UsedUris">
+		<item value="http://hmetaute@github.com/hmetaute/Simple-Product-CRUD-in-java.git"/>
+	</list>
+</section>
